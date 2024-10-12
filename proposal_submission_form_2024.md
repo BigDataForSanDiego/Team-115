@@ -4,7 +4,7 @@
 
 #### Team Name: `YOUR TEAM NAME HERE`    
   
-#### Your teamâ€™s hackathon idea in One sentence:
+#### Your team’s hackathon idea in One sentence:
 ##### `YOUR ONE SENTENCE HERE`
 
 
@@ -13,7 +13,7 @@
 <img height="10%" width="50%" alt="HDMA" src="https://github.com/BigDataForSanDiego/bigdataforsandiego.github.io/blob/main/templates/img/hdma2.png?raw=true"> 
 
 <!--
-#### Theme: Enhancing Healthcareâ€™s Digital Front Door
+#### Theme: Enhancing Healthcare’s Digital Front Door
 #### - Digital solutions to help increase access, manage health, and improve patient satisfaction along the healthcare journey -  
 -->
 
@@ -25,7 +25,7 @@
 - [ ] New patient experience
 > As a potential new customer, how can we leverage the mobile app to help new patients better understand what services are available to them?
 - [ ] Managing my health
-> Itâ€™s easy to get overwhelmed by all the tasks patients often have to do to maintain their health, how can we make managing health more enjoyable?
+> It’s easy to get overwhelmed by all the tasks patients often have to do to maintain their health, how can we make managing health more enjoyable?
 - [ ] Addressing mental health challenges
 > Mental health challenges may be difficult to identify and have a broad impact on health, how can we help clinicians be more in tune with patients mental health needs?
 
