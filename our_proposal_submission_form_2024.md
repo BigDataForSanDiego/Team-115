@@ -5,7 +5,7 @@
 #### Team Name: `Proability Powerhouse`    
   
 #### Your team’s hackathon idea in One sentence:
-##### `YOUR ONE SENTENCE HERE`
+##### `We propose to create an app that visualizes data from a dataset containing counts of inpatient hospitalizations and emergency department visits for patients with Behavioral Health Disorders; futhermore, this app aims to provide easier access to mental health information for patients.`
 
 
 #### A visual
@@ -25,7 +25,7 @@
 > As a potential new customer, how can we leverage the mobile app to help new patients better understand what services are available to them?
 - [ ] Managing my health
 > It’s easy to get overwhelmed by all the tasks patients often have to do to maintain their health, how can we make managing health more enjoyable?
-- [ ] Addressing mental health challenges
+- [X] Addressing mental health challenges
 > Mental health challenges may be difficult to identify and have a broad impact on health, how can we help clinicians be more in tune with patients mental health needs?
 
 #### Optional Questions. `TEAMS CAN SELECT ONE ADDITIONAL OPTIONAL QUESTION (insert X in [ ])`
@@ -39,7 +39,7 @@
 > How can we leverage big (geospatial) data analytics and AI to improve access to resources that mitigate the impact of environmental factors, i.e. pollution, on health disparities?
 
 
-#### Team Coordinator GitHub Username: `YOUR TEAM COORDINATOR GITHUB USERNAME HERE`
+#### Team Coordinator GitHub Username: `efernandez1121`
 
-#### Team Members `YOUR TEAM MEMBERS NAME & GITHUB USERNAME HERE`
+#### Team Members `Juan Lemus (jlemus23), Jesus Garibay Avalos (jgaribay23), Caryn Aguilar (crayonja11), Estephanie Fernandez (efernandez1121)`
 
