@@ -1,16 +1,15 @@
 ### 2024 BIG DATA HACKATHON PROPOSAL FORM
 
-#### Team Number: `YOUR TEAM NUMBER HERE`  
+#### Team Number: `Team 115`  
 
-#### Team Name: `YOUR TEAM NAME HERE`    
+#### Team Name: `Proability Powerhouse`    
   
 #### Your team’s hackathon idea in One sentence:
 ##### `YOUR ONE SENTENCE HERE`
 
 
 #### A visual
-![bigdatahackathon4sd](https://github.com/BigDataForSanDiego/bigdataforsandiego.github.io/blob/main/templates/img/bigdatahackathon_sd_2024.png?raw=true "Big Data Hackathon for San Diego 2024")
-<img height="10%" width="50%" alt="HDMA" src="https://github.com/BigDataForSanDiego/bigdataforsandiego.github.io/blob/main/templates/img/hdma2.png?raw=true"> 
+![Mental Health](https://github.com/BigDataForSanDiego/Team-115/blob/main/Screen%20Shot%202024-10-12%20at%203.18.19%20PM.png)
 
 <!--
 #### Theme: Enhancing Healthcare’s Digital Front Door
