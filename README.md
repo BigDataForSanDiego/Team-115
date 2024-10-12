@@ -5,7 +5,7 @@
 #### Team Name: `Proability Powerhouse`    
   
 #### Your team’s hackathon idea in One sentence:
-##### `We propose to create an app that visualizes data from a dataset containing counts of inpatient hospitalizations and emergency department visits for patients with Behavioral Health Disorders; futhermore, this app aims to provide relevant information about mental health information tendencies in specific groups.`
+##### `We propose to create an app that visualizes data from a dataset containing counts of inpatient hospitalizations and emergency department visits for patients with Behavioral Health Disorders; futhermore, this app aims to provide relevant information about mental health tendencies in specific groups.`
 
 
 #### A visual
