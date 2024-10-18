@@ -9,7 +9,7 @@
 
 
 #### A visual
-![Mental Health](https://github.com/BigDataForSanDiego/Team-115/blob/main/Screen%20Shot%202024-10-12%20at%203.18.19%20PM.png)
+![Check-in](https://github.com/BigDataForSanDiego/Team-115/blob/main/check-in%20image.png)
 
 <!--
 #### Theme: Enhancing Healthcare’s Digital Front Door
