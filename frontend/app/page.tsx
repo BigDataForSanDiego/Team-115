@@ -472,7 +472,15 @@ export default function Home() {
               </p>
             </div>
 
-            <form className="w-full flex flex-col gap-6 p-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50">
+            <form className="w-full flex flex-col gap-6 p-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50"
+            onSubmit={(e)=>{
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const data = Object.fromEntries(formData.entries());
+
+              const encoded = btoa(JSON.stringify(data));
+              window.location.href = `/results?data=${encoded}`;
+            }}>
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
               <span className="text-amber-500">✦</span>
