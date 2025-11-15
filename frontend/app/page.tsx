@@ -42,17 +42,17 @@ function SearchableMultiSelect({ options, selected, onChange, placeholder }: Sea
 
   return (
     <div className="relative" ref={containerRef}>
-      <div className="flex flex-wrap gap-2 p-3 min-h-[48px] border-2 border-indigo-200 rounded-xl bg-white/50 focus-within:ring-2 focus-within:ring-amber-400 focus-within:border-amber-400 transition-all">
+      <div className="flex flex-wrap gap-2 p-2.5 min-h-[42px] border border-gray-300 rounded-lg bg-white focus-within:ring-1 focus-within:ring-sky-400 focus-within:border-sky-400 transition-all">
         {selected.map((item) => (
           <span
             key={item}
-            className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-amber-100 to-orange-100 text-indigo-800 rounded-full text-sm font-medium"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-sky-100 text-sky-700 text-sm rounded-md"
           >
             {item}
             <button
               type="button"
               onClick={() => handleRemove(item)}
-              className="ml-1 text-indigo-600 hover:text-indigo-800 focus:outline-none"
+              className="ml-0.5 text-sky-600 hover:text-sky-800 focus:outline-none text-base leading-none"
             >
               ×
             </button>
@@ -67,17 +67,17 @@ function SearchableMultiSelect({ options, selected, onChange, placeholder }: Sea
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={selected.length === 0 ? placeholder : ""}
-          className="flex-1 min-w-[120px] outline-none bg-transparent text-gray-800"
+          className="flex-1 min-w-[120px] outline-none bg-transparent text-gray-900 text-sm"
         />
       </div>
       {isOpen && filteredOptions.length > 0 && (
-        <div className="absolute z-10 w-full mt-1 max-h-48 overflow-y-auto bg-white/95 backdrop-blur-sm border-2 border-indigo-200 rounded-xl shadow-xl">
+        <div className="absolute z-10 w-full mt-1 max-h-48 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
           {filteredOptions.map((option) => (
             <button
               key={option}
               type="button"
               onClick={() => handleSelect(option)}
-              className="w-full text-left px-4 py-2 hover:bg-amber-50 text-gray-700 focus:bg-amber-50 focus:outline-none transition-colors"
+              className="w-full text-left px-4 py-2 hover:bg-sky-50 text-gray-700 focus:bg-sky-50 focus:outline-none transition-colors text-sm"
             >
               {option}
             </button>
@@ -92,6 +92,7 @@ interface LocationAutocompleteProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
+  hasError?: boolean;
 }
 
 interface LocationResult {
@@ -106,7 +107,7 @@ interface LocationResult {
   };
 }
 
-function LocationAutocomplete({ value, onChange, placeholder }: LocationAutocompleteProps) {
+function LocationAutocomplete({ value, onChange, placeholder, hasError = false }: LocationAutocompleteProps) {
   const [searchQuery, setSearchQuery] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -279,35 +280,36 @@ function LocationAutocomplete({ value, onChange, placeholder }: LocationAutocomp
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="w-full px-4 py-3 border-2 border-indigo-200 rounded-xl bg-white/50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all"
+          className={`w-full px-4 py-2.5 border rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-1 transition-all ${
+            hasError 
+              ? 'border-red-300 focus:border-red-400 focus:ring-red-400' 
+              : 'border-gray-300 focus:border-sky-400 focus:ring-sky-400'
+          }`}
           autoComplete="off"
         />
         {isLoading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <svg className="animate-spin h-5 w-5 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+            <div className="w-4 h-4 border-2 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
       </div>
       {isOpen && suggestions.length > 0 && (
-        <div className="absolute z-20 w-full mt-1 max-h-64 overflow-y-auto bg-white/95 backdrop-blur-sm border-2 border-indigo-200 rounded-xl shadow-xl">
+        <div className="absolute z-20 w-full mt-1 max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
           {suggestions.map((option, index) => (
             <button
               key={`${option}-${index}`}
               type="button"
               onClick={() => handleSelect(option)}
               onMouseEnter={() => setHighlightedIndex(index)}
-              className={`w-full text-left px-4 py-3 text-gray-700 focus:outline-none transition-colors ${
+              className={`w-full text-left px-4 py-2.5 text-gray-700 focus:outline-none transition-colors text-sm ${
                 index === highlightedIndex
-                  ? "bg-amber-100 text-indigo-900"
-                  : "hover:bg-amber-50"
+                  ? "bg-sky-50 text-sky-900"
+                  : "hover:bg-sky-50"
               }`}
             >
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-4 h-4 text-amber-500 flex-shrink-0"
+                  className="w-3.5 h-3.5 text-sky-400 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -332,7 +334,7 @@ function LocationAutocomplete({ value, onChange, placeholder }: LocationAutocomp
         </div>
       )}
       {isOpen && searchQuery.length >= 2 && !isLoading && suggestions.length === 0 && (
-        <div className="absolute z-20 w-full mt-1 bg-white/95 backdrop-blur-sm border-2 border-indigo-200 rounded-xl shadow-xl px-4 py-3 text-gray-500 text-sm">
+        <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg px-4 py-3 text-gray-500 text-sm">
           No locations found. Try a different search term.
         </div>
       )}
@@ -345,10 +347,48 @@ export default function Home() {
   const [disabilities, setDisabilities] = useState<string[]>([]);
   const [medicalConditions, setMedicalConditions] = useState<string[]>([]);
   const [location, setLocation] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const formRef = useRef<HTMLDivElement>(null);
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const validateForm = (formData: FormData): { isValid: boolean; errors: Record<string, string> } => {
+    const newErrors: Record<string, string> = {};
+
+    // Validate name
+    const name = formData.get("name") as string;
+    if (!name || name.trim() === "") {
+      newErrors.name = "Name is required";
+    }
+
+    // Validate gender
+    const gender = formData.get("gender") as string;
+    if (!gender) {
+      newErrors.gender = "Please select a gender";
+    }
+
+    // Validate homeless
+    const homeless = formData.get("homeless") as string;
+    if (!homeless) {
+      newErrors.homeless = "Please select an option";
+    }
+
+    // Validate race
+    const raceValues = formData.getAll("race") as string[];
+    if (raceValues.length === 0) {
+      newErrors.race = "Please select at least one race";
+    }
+
+    // Validate location
+    if (!location || location.trim() === "") {
+      newErrors.location = "Location is required";
+    }
+
+    setErrors(newErrors);
+    return { isValid: Object.keys(newErrors).length === 0, errors: newErrors };
   };
 
   const interestOptions = [
@@ -420,246 +460,294 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 font-sans relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50 font-sans relative">
+      {/* Accent line */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-sky-400"></div>
 
-      {/* Pathway decorative lines */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <svg className="w-full h-full opacity-10" viewBox="0 0 1200 800" preserveAspectRatio="none">
-          <path d="M0,400 Q300,200 600,400 T1200,400" stroke="currentColor" strokeWidth="2" fill="none" className="text-blue-400"/>
-          <path d="M0,500 Q300,300 600,500 T1200,500" stroke="currentColor" strokeWidth="2" fill="none" className="text-indigo-400"/>
-        </svg>
-      </div>
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-white p-10 max-w-md mx-4 text-center rounded-xl shadow-lg">
+            <div className="mb-6">
+              <div className="w-12 h-12 border-[3px] border-sky-200 border-t-sky-500 rounded-full animate-spin mx-auto"></div>
+            </div>
+            <h3 className="text-xl font-semibold text-sky-600 mb-2">Processing Your Application</h3>
+            <p className="text-gray-600 text-sm">Please wait while we process your information...</p>
+          </div>
+        </div>
+      )}
 
       <div className="relative z-10">
         {/* Welcome Section */}
-        <div className="flex flex-col items-center justify-center min-h-screen px-6 py-12">
-          <div className="flex flex-col items-center gap-8 w-full max-w-4xl text-center">
-            <h1 className="text-7xl font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-              Hopeful Futures
-            </h1>
-            <p className="text-2xl text-gray-700 font-medium max-w-3xl">
+        <div className="flex flex-col items-center justify-center min-h-screen px-6 py-16 relative z-10">
+          <div className="flex flex-col items-center gap-8 w-full max-w-3xl text-center">
+            <div className="relative">
+              <h1 className="text-6xl md:text-7xl font-bold text-sky-600 tracking-tight leading-tight">
+                Hopeful Futures
+              </h1>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-sky-400 rounded-full"></div>
+            </div>
+            <p className="text-2xl md:text-3xl text-gray-800 font-semibold max-w-2xl leading-tight mt-4">
               AI-Powered Job Matching Platform
             </p>
-            <p className="text-lg text-gray-600 max-w-3xl">
+            <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mt-2">
               Our platform uses AI to curate personalized job descriptions tailored to your unique needs, including disabilities, injuries, and circumstances. We'll match you with suitable opportunities and provide resources like skill training videos, courses, and certificates to help you prepare for success.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            <div className="mt-10">
               <button
                 onClick={scrollToForm}
-                className="px-10 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold text-lg hover:from-amber-600 hover:to-orange-600 active:from-amber-700 active:to-orange-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
+                className="group px-8 py-3 bg-sky-500 text-white font-medium text-base rounded-lg hover:bg-sky-600 transition-colors shadow-md"
               >
-                Get Started
+                <span className="flex items-center gap-2">
+                  Get Started
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
         </div>
 
         {/* Form Section */}
-        <div ref={formRef} className="flex flex-col items-center justify-center px-6 py-12">
-          <div className="flex flex-col items-center gap-6 w-full max-w-3xl">
-            <div className="text-center space-y-4 mb-4">
-              <h2 className="text-4xl font-bold text-indigo-700">
+        <div ref={formRef} className="flex flex-col items-center justify-center px-6 py-16 bg-white relative z-10">
+          <div className="flex flex-col items-center gap-8 w-full max-w-2xl">
+            <div className="text-center space-y-3 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-sky-600">
                 Application Form
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl">
+              <div className="w-16 h-1 bg-sky-400 mx-auto rounded-full"></div>
+              <p className="text-base text-gray-600 max-w-xl mt-4">
                 Fill out the form below with your information. Select all options that apply to you, then click "Submit Application" to get started.
               </p>
             </div>
 
-            <form className="w-full flex flex-col gap-6 p-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50"
-            onSubmit={(e)=>{
+            <form className="w-full flex flex-col gap-6 p-8 bg-white border border-gray-200 rounded-xl shadow-sm"
+            onSubmit={async (e)=>{
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
+              
+              // Validate form
+              const validation = validateForm(formData);
+              if (!validation.isValid) {
+                // Scroll to first error
+                setTimeout(() => {
+                  const firstErrorField = Object.keys(validation.errors)[0];
+                  if (firstErrorField) {
+                    let errorElement: HTMLElement | null = null;
+                    if (firstErrorField === 'location') {
+                      // Find the location input within LocationAutocomplete
+                      errorElement = document.querySelector('input[placeholder*="city"]') as HTMLElement ||
+                                   document.querySelector('input[placeholder*="Search for"]') as HTMLElement;
+                    } else {
+                      errorElement = document.querySelector(`[name="${firstErrorField}"]`) as HTMLElement ||
+                                   document.querySelector(`#${firstErrorField}`) as HTMLElement;
+                    }
+                    if (errorElement) {
+                      errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      errorElement.focus();
+                    }
+                  }
+                }, 100);
+                return;
+              }
+
+              setIsLoading(true);
+              
+              // Simulate processing time
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              
               const data = Object.fromEntries(formData.entries());
+              data.interests = JSON.stringify(interests);
+              data.disabilities = JSON.stringify(disabilities);
+              data["medical-conditions"] = JSON.stringify(medicalConditions);
+              data.location = location;
 
               const encoded = btoa(JSON.stringify(data));
-              window.location.href = `/results?data=${encoded}`;
+              // URL encode the base64 string to handle special characters
+              window.location.href = `/results?data=${encodeURIComponent(encoded)}`;
             }}>
           <div className="flex flex-col gap-2">
-            <label htmlFor="name" className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
-              Name
+            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+              Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               id="name"
               name="name"
-              className="px-4 py-3 border-2 border-indigo-200 rounded-xl bg-white/50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all placeholder:text-gray-400"
+              required
+              className={`px-4 py-2.5 border rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-1 transition-all placeholder:text-gray-400 ${
+                errors.name ? 'border-red-300 focus:ring-red-400 focus:border-red-400' : 'border-gray-300 focus:ring-sky-400 focus:border-sky-400'
+              }`}
               placeholder="Enter your name"
             />
+            {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name}</p>}
           </div>
 
           <div className="flex flex-col gap-3">
-            <label className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
-              Gender
+            <label className="text-sm font-medium text-gray-700">
+              Gender <span className="text-red-500">*</span>
             </label>
-            <div className="flex flex-wrap gap-4">
+            {errors.gender && <p className="text-sm text-red-600 -mt-2">{errors.gender}</p>}
+            <div className="flex flex-wrap gap-6">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="gender"
                   value="male"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Male</span>
+                <span className="text-gray-700 text-sm">Male</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="gender"
                   value="female"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Female</span>
+                <span className="text-gray-700 text-sm">Female</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="gender"
                   value="non-binary"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Non-binary</span>
+                <span className="text-gray-700 text-sm">Non-binary</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="gender"
                   value="other"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Other</span>
+                <span className="text-gray-700 text-sm">Other</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="gender"
                   value="prefer-not-to-say"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Prefer not to say</span>
+                <span className="text-gray-700 text-sm">Prefer not to say</span>
               </label>
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
-            <label className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
-              Homeless
+            <label className="text-sm font-medium text-gray-700">
+              Homeless <span className="text-red-500">*</span>
             </label>
-            <div className="flex flex-wrap gap-4">
+            {errors.homeless && <p className="text-sm text-red-600 -mt-2">{errors.homeless}</p>}
+            <div className="flex flex-wrap gap-6">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="homeless"
                   value="yes"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Yes</span>
+                <span className="text-gray-700 text-sm">Yes</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="homeless"
                   value="no"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">No</span>
+                <span className="text-gray-700 text-sm">No</span>
               </label>
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
-            <label className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
-              Race
+            <label className="text-sm font-medium text-gray-700">
+              Race <span className="text-red-500">*</span>
             </label>
-            <div className="flex flex-col gap-3">
+            {errors.race && <p className="text-sm text-red-600 -mt-2">{errors.race}</p>}
+            <div className="flex flex-col gap-2.5">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="american-indian"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">American Indian or Alaska Native</span>
+                <span className="text-gray-700 text-sm">American Indian or Alaska Native</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="asian"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Asian</span>
+                <span className="text-gray-700 text-sm">Asian</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="black"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Black or African American</span>
+                <span className="text-gray-700 text-sm">Black or African American</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="hispanic"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Hispanic or Latino</span>
+                <span className="text-gray-700 text-sm">Hispanic or Latino</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="native-hawaiian"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Native Hawaiian or Other Pacific Islander</span>
+                <span className="text-gray-700 text-sm">Native Hawaiian or Other Pacific Islander</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="white"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">White</span>
+                <span className="text-gray-700 text-sm">White</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="other"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Other</span>
+                <span className="text-gray-700 text-sm">Other</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   name="race"
                   value="prefer-not-to-say"
-                  className="w-5 h-5 text-amber-500 border-2 border-indigo-300 rounded focus:ring-2 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500 cursor-pointer"
                 />
-                <span className="text-gray-700">Prefer not to say</span>
+                <span className="text-gray-700 text-sm">Prefer not to say</span>
               </label>
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
-            <label className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
+            <label className="text-sm font-medium text-gray-700">
               Interest
             </label>
             <SearchableMultiSelect
@@ -676,8 +764,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <label className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
+            <label className="text-sm font-medium text-gray-700">
               Disabilities
             </label>
             <SearchableMultiSelect
@@ -694,8 +781,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <label className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
+            <label className="text-sm font-medium text-gray-700">
               Medical Conditions
             </label>
             <SearchableMultiSelect
@@ -712,15 +798,16 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <label htmlFor="location" className="text-sm font-semibold text-indigo-700 flex items-center gap-2">
-              <span className="text-amber-500">✦</span>
-              Location/Area
+            <label htmlFor="location" className="text-sm font-medium text-gray-700">
+              Location/Area <span className="text-red-500">*</span>
             </label>
             <LocationAutocomplete
               value={location}
               onChange={setLocation}
               placeholder="Search for a city..."
+              hasError={!!errors.location}
             />
+            {errors.location && <p className="text-sm text-red-600 mt-1">{errors.location}</p>}
             <input
               type="hidden"
               name="location"
@@ -730,9 +817,20 @@ export default function Home() {
 
           <button
             type="submit"
-            className="mt-6 px-10 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold text-lg hover:from-amber-600 hover:to-orange-600 active:from-amber-700 active:to-orange-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
+            disabled={isLoading}
+            className="mt-4 px-8 py-3 bg-sky-500 text-white font-medium text-base rounded-lg hover:bg-sky-600 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Application
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </span>
+            ) : (
+              "Submit Application"
+            )}
           </button>
         </form>
           </div>
