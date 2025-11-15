@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type EncodedFormData = {
   name?: string;
@@ -131,12 +132,9 @@ function decodeUserProfile(searchParams: Record<string, string>) {
   }
 }
 
-export default function ResultsPage({
-  searchParams = {},
-}: {
-  searchParams?: Record<string, string>;
-}) {
-  const profile = useMemo(() => decodeUserProfile(searchParams), [searchParams]);
+export default function ResultsPage() {
+  const searchParams = useSearchParams();
+  const profile = useMemo(() => decodeUserProfile(Object.fromEntries(searchParams.entries())), [searchParams]);
   const [simplifiedDescriptions, setSimplifiedDescriptions] = useState<
     Record<string, SimplifiedJob>
   >({});
@@ -148,12 +146,10 @@ export default function ResultsPage({
 
   useEffect(() => {
     if (!profile) return;
-    const activeProfile: AudienceProfile = profile;
-
     let isMounted = true;
     async function fetchAll() {
       setIsLoading(true);
-      setError(null);
+      setError("");
 
       try {
         await Promise.all(
@@ -165,12 +161,7 @@ export default function ResultsPage({
                 body: JSON.stringify({
                   jobTitle: job.title,
                   jobDescription: job.description,
-                  audienceProfile: {
-                    interests: activeProfile.interests,
-                    disabilities: activeProfile.disabilities,
-                    medicalConditions: activeProfile.medicalConditions,
-                    location: activeProfile.location,
-                  },
+                  audienceProfile: profile,
                 }),
               }).then((res) => {
                 if (!res.ok) {
@@ -183,13 +174,10 @@ export default function ResultsPage({
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   jobTitle: job.title,
-                  currentSkills: activeProfile.interests,
-                  interests: activeProfile.interests,
-                  disabilities: activeProfile.disabilities,
-                  medicalConditions: activeProfile.medicalConditions,
-                  location: activeProfile.location,
-                  learningPreferences: "Short, low-bandwidth lessons",
-                  timeAvailablePerWeek: "5 hours",
+                  interests: profile?.interests ?? [],
+                  disabilities: profile?.disabilities ?? [],
+                  medicalConditions: profile?.medicalConditions ?? [],
+                  location: profile?.location ?? "",
                 }),
               }).then((res) => {
                 if (!res.ok) {
